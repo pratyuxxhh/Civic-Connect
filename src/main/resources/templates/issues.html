@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Details</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    #issueCard {
+        background-color: #ffffff;
+        border: 2px solid #3E885B;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #issueCard img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    #issueCard h2 {
+        color: #2F4B26;
+        margin-bottom: 10px;
+    }
+
+    #issueCard p {
+        color: #3E885B;
+        margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+<div id="issueCard">
+  <img id="issueImg" src="" alt="Issue Image">
+  <h2 id="issueDesc"></h2>
+  <p id="issueDept"></p>
+</div>
+
+<script>
+
+const queryString = window.location.search; // "?id=64f6f0e2..."
+
+// Parse query parameters
+const urlParams = new URLSearchParams(queryString);
+
+// Get the value of "id"
+const issueId = urlParams.get('id');
+
+  fetch(`http://localhost:8080/user/issue/${issueId}`)
+      .then(res => res.json())
+      .then(data => {
+          // Assuming backend sends { description: "...", department: "...", image: "BASE64_STRING" }
+          document.getElementById('issueImg').src = "data:image/jpeg;base64," + data.image;
+          document.getElementById('issueDesc').textContent = data.description;
+          document.getElementById('issueDept').textContent = "Department: " + data.department;
+      })
+      .catch(err => console.error("Error fetching issue:", err));
+</script>
+</body>
+</html>
