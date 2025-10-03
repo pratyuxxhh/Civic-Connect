@@ -17,6 +17,10 @@ import java.util.List;
 public interface WorkerRepository extends MongoRepository<WorkerPOJO, ObjectId> {
     WorkerPOJO findByUserName(String userName);
     boolean existsByUserName(String userName);
+    List<WorkerPOJO> findByDepartment(String department);
+    List<WorkerPOJO> findByDepartmentAndIsHired(String department, Boolean isHired);
+    List<WorkerPOJO> findByDepartmentAndIsBusy(String department, Boolean isBusy);
+    List<WorkerPOJO> findByDepartmentAndIsHiredAndIsBusy(String department, Boolean isHired, Boolean isBusy);
     List<Worker> findByLocationNear(GeoJsonPoint point, Distance distance);
 
 }

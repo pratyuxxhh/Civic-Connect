@@ -23,11 +23,5 @@ public class Admin {
         return adminServices.setThisLocation(lon , lat);
     }
 
-    //workers list
-    //workers location
-    // add new worker
-    //remove worker
-    //change department of issue
-    //double-check the validity of the issue
 
 }

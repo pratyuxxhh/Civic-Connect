@@ -1,16 +1,21 @@
 package com.example.civic_issues.controller.user;
 
+import com.example.civic_issues.entities.AdminPOJO;
 import com.example.civic_issues.entities.IssuePOJO;
 import com.example.civic_issues.entities.UserPOJO;
 import com.example.civic_issues.repository.issueRepo.IssueRepository;
+import com.example.civic_issues.repository.userRepo.UserRepository;
 import com.example.civic_issues.services.aiService.AiService;
 import com.example.civic_issues.services.issueService.IssueService;
 import com.example.civic_issues.services.userService.UserServices;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +35,8 @@ public class UserAndIssues {
     @Autowired
     private IssueRepository issueRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private AiService aiService;
 
     @GetMapping("/health-check")
@@ -37,14 +44,8 @@ public class UserAndIssues {
         return ResponseEntity.ok("hey , UserAndIssues is fine ");
     }
 
-
     @PostMapping("/upload-new-issue")
-    public ResponseEntity<String> uploadAnIssue(
-            @RequestPart("lat") String latitude,
-            @RequestPart("long") String longitude,
-            @RequestPart("dept") String department,
-            @RequestPart("desc") String description,
-            @RequestPart("fileData") MultipartFile fileData){
+    public ResponseEntity<String> uploadAnIssue(@RequestPart("lat") String latitude,@RequestPart("long") String longitude,@RequestPart("dept") String department,@RequestPart("desc") String description, @RequestPart("fileData") MultipartFile fileData){
         try{
 
 
@@ -95,20 +96,20 @@ public class UserAndIssues {
         return ResponseEntity.ok(response);
     }
 
-
     @PutMapping("/my-profile")
     public ResponseEntity<String> updateProfile(@RequestBody UserPOJO pojo){
         userServices.updateMyProfile(pojo);
         return new ResponseEntity<>("profile updated successfully " ,HttpStatus.ACCEPTED);
     }
 
-
-
-    //it is complex
-    @GetMapping("/get-nearby-issues")
-    public ResponseEntity<List<IssuePOJO>> getNearByIssues(){
-        return null;
+    //it is complex --done
+    @GetMapping("/get-nearby-issues/{distance}")
+    public ResponseEntity<List<IssuePOJO>> getNearByIssues(@PathVariable Double dist) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserPOJO currentUser = userRepository.findByUserName(auth.getName());
+        return issueService.getNearByIssues(currentUser , dist);
     }
 
+    //voting system
 
 }

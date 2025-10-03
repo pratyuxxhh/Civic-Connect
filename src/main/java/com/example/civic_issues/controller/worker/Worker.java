@@ -1,6 +1,7 @@
 package com.example.civic_issues.controller.worker;
 
 
+import com.example.civic_issues.entities.UserPOJO;
 import com.example.civic_issues.entities.WorkerPOJO;
 import com.example.civic_issues.entities.IssuePOJO;
 import com.example.civic_issues.repository.workerRepo.WorkerRepository;
@@ -31,17 +32,25 @@ public class Worker {
         return ResponseEntity.ok("hey , the worker is fine ");
     }
 
-    @GetMapping("/get-tasks")
+    @GetMapping("/get-assigned-tasks")
     public ResponseEntity<List<IssuePOJO>> getAllTasks(){
 
         return null;
     }
-
-
+    @PutMapping("/my-profile")
+    public ResponseEntity<String> updateProfile(@RequestBody WorkerPOJO pojo){
+        workerServices.updateMyProfile(pojo);
+        return new ResponseEntity<>("profile updated successfully " ,HttpStatus.ACCEPTED);
+    }
     @PutMapping("/set-location")
     public ResponseEntity<String> setLocation(@RequestParam Double latitude, @RequestParam Double longitude)
     {
         return workerServices.setThisLocation(latitude,longitude);
-        
     }
+
+    //get completed tasks
+
+    //get incomplete tasks
+
+
 }

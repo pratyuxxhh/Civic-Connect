@@ -45,7 +45,7 @@ public class home {
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/health")
-    public ResponseEntity<String> healthcheck(){
+    public ResponseEntity<String> healthCheck(){
         return new ResponseEntity<>("everything is fine",HttpStatus.OK);
     }
 }

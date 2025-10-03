@@ -24,7 +24,6 @@ public class IssuePOJO {
     private String status;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
-
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
 
