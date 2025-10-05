@@ -1,10 +1,12 @@
 package com.example.civic_issues.services.adminService;
 
+import com.example.civic_issues.controller.admin.Admin;
 import com.example.civic_issues.entities.AdminPOJO;
 import com.example.civic_issues.entities.SigninRequestDTO;
 import com.example.civic_issues.entities.UserPOJO;
 import com.example.civic_issues.repository.AuthRepo;
 import com.example.civic_issues.repository.adminRepo.AdminRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
@@ -57,4 +59,21 @@ public class AdminServices {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AdminPOJO admin = adminRepository.findByUserName(auth.getName());
+        adminRepository.delete(admin);
+    }
+
+    public void updateMyProfile(AdminPOJO pojo) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AdminPOJO user = adminRepository.findByUserName(auth.getName());
+        if(pojo.getFullName()!=null) user.setFullName(pojo.getFullName());
+        if(pojo.getAddress()!=null) user.setAddress(pojo.getAddress());
+        if(pojo.getEmail()!=null) user.setEmail(pojo.getEmail());
+        adminRepository.save(user);
+    }
+
+
 }

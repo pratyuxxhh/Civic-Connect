@@ -71,6 +71,7 @@ public class UserAndIssues {
             return issueService.deleteThisIssue(id);
     }
 
+    //make it dynamic
     @PutMapping("/set-location")
     public ResponseEntity<String> setThisLocation(@RequestParam double lat,@RequestParam Double lon){
         return userServices.setThisLocation(lon , lat);

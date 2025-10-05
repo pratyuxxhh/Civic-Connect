@@ -9,5 +9,10 @@ public class WorkerAndUser {
     // upload proof
     // update status of issue
     // chat with the issuer -optional
+    // show that issue  in the nearby issues section
+
+
+
+
 
 }

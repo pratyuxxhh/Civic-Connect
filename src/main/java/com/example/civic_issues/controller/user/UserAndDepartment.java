@@ -32,4 +32,5 @@ public class UserAndDepartment {
         return new ResponseEntity<>(admins , HttpStatus.FOUND);
 
     }
+    //send a report to nearby department
 }

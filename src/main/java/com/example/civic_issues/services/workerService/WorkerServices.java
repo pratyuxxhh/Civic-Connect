@@ -86,8 +86,8 @@ public class WorkerServices {
         workerRepository.save(worker);
     }
 
-    public ResponseEntity<String> removeThisWorker(ObjectId id, AdminPOJO admin) {
-        WorkerPOJO worker = workerRepository.findById(id).orElse(null);
+    public ResponseEntity<String> removeThisWorker(String username, AdminPOJO admin) {
+        WorkerPOJO worker = workerRepository.findByUserName(username);
         if(worker!=null){
             admin.getWorkers().remove(worker);
             worker.setIsHired(Boolean.FALSE);

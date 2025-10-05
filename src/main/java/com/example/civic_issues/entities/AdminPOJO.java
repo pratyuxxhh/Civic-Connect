@@ -24,7 +24,6 @@ public class AdminPOJO {
     private String role;
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
-
     private String Department;
     @DBRef
     private List<WorkerPOJO> workers= new ArrayList<>();

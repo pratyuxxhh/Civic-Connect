@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface IssueRepository extends MongoRepository<IssuePOJO, ObjectId> {
     Optional<IssuePOJO> findById(ObjectId id);
     List<IssuePOJO> findByLocationNear(GeoJsonPoint point, Distance distance);
-
+    List<IssuePOJO> findByStatus(String status);
 }
